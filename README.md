@@ -2,7 +2,7 @@
 
 星图（Star Chart）是一套绘图方法论和工具集的统称，可用于 **精确** 绘制直线型图形的二维轮廓，对于不规则的曲线型图形也能较直观地进行描述并绘制。目前主要的应用场景是房屋平面户型图的 _边测边绘_ 。
 
-
+![](https://github.com//FangStarNet/starchart/blob/master/demo.gif?raw=true)
 
 ## 动机
 
