@@ -1,0 +1,269 @@
+/*
+ * StarChat - 星图（Star Chart）是一套绘图方法论和工具集的统称，可用于精确 
+ * 绘制直线型图形的二维轮廓，对于不规则的曲线型图形也能较直观地进行描述并绘制。
+ * 目前主要的应用场景是房屋平面户型图的边测边绘.
+ *
+ * Copyright (C) 2016,  fangstar.com
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/**
+ * @file 星图样式.
+ * 
+ * @author <a href="mailto:liliyuan@fangstar.net">Liyuan Li</a>
+ * @version 0.1.0.0, Nov 12, 2016 
+ */
+/* start reset */
+html {
+	height: 100%;
+	overflow: hidden;
+}
+
+body {
+	margin: 0;
+	height: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+    margin: 0;
+    font-size: 100%;
+    vertical-align: middle;
+    font-family: $font-family-base;
+    outline: none;
+}
+
+button,
+input {
+    line-height: normal;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    cursor: pointer;
+    -webkit-appearance: button;
+}
+
+input[type="search"] {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+}
+/* end reset */
+
+/* start function */
+.fn-clear:before,
+.fn-clear:after {
+    display: table;
+    content: "";
+}
+
+.fn-clear:after {
+    clear: both;
+}
+
+.fn-left {
+    float: left;
+}
+
+.fn-right {
+    float: right;
+}
+
+.fn-none {
+    display: none;
+}
+
+.ft-gray {
+    color: #999;
+}
+/* end function */
+
+/* start common */
+button,
+.btn {
+    cursor: pointer;
+    color: #333;
+    border-radius: 3px;
+    padding: 6px 12px;
+    background-color: #fcfcfc;
+    background: linear-gradient(#fcfcfc, #eee);
+    border: 1px solid #D5D5D5;
+    border-bottom-color: #E1E1E1;
+    box-sizing: border-box;
+    line-height: 19px;
+    white-space: nowrap;
+}
+
+
+button:hover,
+.btn:hover {
+    text-decoration: none;
+    border-color: #ccc;
+    background-color: #eee;
+    background: linear-gradient(#eee, #ddd);
+}
+
+button:active,
+.btn:active {
+    border-color: #51a7e8;
+    background-color: #dcdcdc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) inset;
+}
+
+button.green,
+.btn.green {
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
+    background-color: #60b044;
+    background-image: none;
+    border-color: #5ca941;
+}
+
+button.green:hover,
+.btn.green:hover{
+    background-color: #569e3d;
+    background-image: none;
+}
+
+button.green:active,
+button.green.active {
+    background-color: #569e3d;
+    background-image: none;
+    border-color: #418737;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+}
+
+button.red,
+.btn.red {
+    color: #d23f31;
+}
+
+button.red:hover,
+.btn.red:hover,
+.btn.red-hover {
+    color: #FFF;
+    background-color: #d23f31;
+    background-image: linear-gradient(#c0372a, #d23f31);
+    border-color: #c0372a;
+}
+
+button.red:active,
+.btn.red:active {
+    background-color: #d23f31;
+    background-image: none;
+    border-color: #c9320c
+}
+
+input[type=text],
+input[type=datetime],
+input[type=datetime-local],
+input[type=password],
+input[type=number],
+select,
+textarea {
+    border: 1px solid #CCCCCC;
+    background-color: #FAFAFA;
+    border-radius: 3px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset;
+    padding: 7px 8px;
+    line-height: 17px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+input[type=text]:focus,
+input[type=password]:focus,
+textarea:focus {
+    background-color: #FFF;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075) inset, 0 0 5px rgba(81, 167, 232, 0.5);
+    border: 1px solid #51A7E8;
+}
+/* end common */
+
+/* start action panel  */
+.canvas {
+	height: 80%;
+	width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.start-panel {
+	width: 100%;
+    background-color: #f2f2f2;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.start-panel h2 {
+    margin-left: 40px;
+}
+
+.start-panel button.red {
+	position: absolute;
+    top: 50%;
+    font-size: 36px;
+    font-weight: 500;
+    left: 50%;
+    padding: 10px;
+    display: block;
+    line-height: 41px;
+    margin: -30px 0 0 -52px;
+}
+
+.action-panel {
+	width: 100%;
+    text-align: center;
+    padding: 10px;	
+    background-color: #f2f2f2;
+    box-sizing: border-box
+}
+
+.action-panel input {
+    width: 140px;
+}
+
+.action-panel .green {
+	margin-bottom: 10px;
+}
+
+.action-panel .red {
+    margin-right: 10px;
+}
+
+.action-panel button {
+	width: 64px;
+}
+/* end action panel  */
