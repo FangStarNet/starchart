@@ -65,12 +65,17 @@
  		addPoint('r');
  	});
 
+ 	// get dir
+ 	$('.action-panel button.get-lor').click(function () {
+ 		$(this).text('LoR: ' + Tools.getLoR());
+ 	});
+
  	// go Demo1
  	$('.start-panel li').click(function () {
  		$('.start-panel').hide();
  		$('.action-panel').show();
 
- 		var mockActions = [{"len":14.2,"dir":"l"},{"len":26.3,"dir":"r"},{"len":111.5,"dir":"l"},{"len":27.5,"dir":"l"},{"len":66.5,"dir":"r"},{"len":38,"dir":"l"},{"len":41.5,"dir":"r"},{"len":185,"dir":"r"},{"len":180,"dir":"r"},{"len":249.5,"dir":"l"},{"len":670,"dir":"r"},{"len":112,"dir":"l"},{"len":33.3,"dir":"l"},{"len":36,"dir":"r"},{"len":91,"dir":"r"},{"len":268.5,"dir":"r"},{"len":579,"dir":"l"},{"len":23,"dir":"l"},{"len":446,"dir":"r"},{"len":348,"dir":"r"},{"len":310,"dir":"r"},{"len":266,"dir":"l"},{"len":29,"dir":"l"},{"len":266,"dir":"r"},{"len":262,"dir":"r"},{"len":255,"dir":"r"},{"len":170,"dir":"l"},{"len":16,"dir":"l"},{"len":189,"dir":"l"},{"len":281,"dir":"l"},{"len":235,"dir":"r"},{"len":118,"dir":"r"},{"len":376,"dir":"r"},{"len":324,"dir":"r"},{"len":67,"dir":"l"},{"len":75,"dir":"l"},{"len":67,"dir":"r"},{"len":336,"dir":"l"},{"len":100,"dir":"r"}];
+ 		var mockActions = [{"len":14.2,"lor":"l"},{"len":26.3,"lor":"r"},{"len":111.5,"lor":"l"},{"len":27.5,"lor":"l"},{"len":66.5,"lor":"r"},{"len":38,"lor":"l"},{"len":41.5,"lor":"r"},{"len":185,"lor":"r"},{"len":180,"lor":"r"},{"len":249.5,"lor":"l"},{"len":670,"lor":"r"},{"len":112,"lor":"l"},{"len":33.3,"lor":"l"},{"len":36,"lor":"r"},{"len":91,"lor":"r"},{"len":268.5,"lor":"r"},{"len":579,"lor":"l"},{"len":23,"lor":"l"},{"len":446,"lor":"r"},{"len":348,"lor":"r"},{"len":310,"lor":"r"},{"len":266,"lor":"l"},{"len":29,"lor":"l"},{"len":266,"lor":"r"},{"len":262,"lor":"r"},{"len":255,"lor":"r"},{"len":170,"lor":"l"},{"len":16,"lor":"l"},{"len":189,"lor":"l"},{"len":281,"lor":"l"},{"len":235,"lor":"r"},{"len":118,"lor":"r"},{"len":376,"lor":"r"},{"len":324,"lor":"r"},{"len":67,"lor":"l"},{"len":75,"lor":"l"},{"len":67,"lor":"r"},{"len":336,"lor":"l"},{"len":100,"lor":"r"}];
  		StarChart.init();
 
  		for (var i = 0, j = 0; i < mockActions.length; i++) {
@@ -103,7 +108,8 @@
 
  		StarChart.actions.push({
             'len': parseFloat(len),
-            'dir': dir
+            'dir': dir,
+            'alpha': Tools.lastAlpha
         });
 
  		StarChart.redrawChart();
