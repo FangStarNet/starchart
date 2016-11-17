@@ -158,6 +158,7 @@ var StarChart = {
         this.redrawChart();
     },
     finished: function () {
+        $('textarea').text(JSON.stringify(this.actions));
         console.log(JSON.stringify(this.actions));
         alert('该户型套内面积为：' + this.paths[0].area + '平方米');
     },
@@ -308,18 +309,18 @@ var Tools = {
     getDeviceAlpha: function () {
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function (event) {
-                Tools.lastAlpha = event.alpha;
+                Tools.lastAlpha = Math.ceil(360 - event.alpha);
             }, false);
         } else {
             $('#device').html('你个破手机');
         }
     },
     getLoR: function () {
-        const MIDDLE = "MIDDLE";
-        const RIGHT = "RIGHT";
-        const LEFT = "LEFT";
+        const MIDDLE = "l";
+        const RIGHT = "r";
+        const LEFT = "l";
 
-        var startAngle = StarChart.actions[StarChart.actions.length - 1].alpha,
+        var startAngle = StarChart.actions.length === 0 ? Tools.lastAlpha : StarChart.actions[StarChart.actions.length - 1].alpha,
         endAngle = Tools.lastAlpha;
 
         var delta = endAngle - startAngle;

@@ -248,11 +248,18 @@ textarea:focus {
     text-align: center;
     padding: 10px;	
     background-color: #f2f2f2;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 .action-panel input {
     width: 140px;
+}
+
+.action-panel textarea {
+    float: left;
+    width: 100px;
+    height: 30px;
+    padding: 0;
 }
 
 .action-panel .green {
@@ -265,5 +272,9 @@ textarea:focus {
 
 .action-panel button {
 	width: 64px;
+}
+
+.action-panel .get-lor {
+    width: auto;
 }
 /* end action panel  */
