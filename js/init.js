@@ -54,6 +54,13 @@
     // finish
     $('.action-panel button.finish').click(function () {
         StarChart.finished();
+        $('.result').show();
+    });
+
+    // switch module
+    $('.action-panel button.switch').click(function () {
+    	$(this).parent().prev().toggle();
+    	$('#canvas').outerHeight($(window).height() - $('.action-panel').outerHeight());
     });
 
     // reverse
@@ -140,5 +147,11 @@
         $('.action-panel input').val('');
     };
 
+    // hide textarea
+    $('.result > span').click(function (event) {
+    	$('.result').hide();
+    })
+
+    // NOTE: 屏蔽 Start 页面
     $('.start-panel button.red').click();
 })();

@@ -13,17 +13,22 @@
             <span id="device"></span>
         </div>
         <div class="action-panel fn-clear fn-none">
-            <div class="fn-clear">
+            <div class="fn-clear fn-none">
                 <button class="red fn-left left"><</button>
                 <input type="number"><span class="ft-gray"> m</span>
                 <button class="red fn-right right">></button>
             </div>
             <div class="fn-clear">
+                <button class="green fn-left switch">Switch</button>
                 <button class="green fn-left finish fn-none">finish</button>
                 <button class="green fn-left redo fn-none">redo</button>
                 <button class="green fn-left undo fn-none">undo</button> 
-                <textarea readonly>record data</textarea>
                 <button class="green fn-right fn-none reverse">R</button> 
+            </div>
+
+            <div class="result fn-none">
+                <span>X</span>
+                <textarea readonly>record data</textarea>
             </div>
         </div>
         <div class="tip"></div>

@@ -255,14 +255,31 @@ textarea:focus {
 }
 
 .action-panel textarea {
-    float: left;
-    width: 100px;
-    height: 33px;
-    padding: 0;
+    width: 90%;
+    height: 90%;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+
+.result > span {
+    position: absolute;
+    right: 5%;
+    top: 5%;
+    z-index: 2;
+    background-color: #999;
+    color: #fff;
+    border-radius: 100px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin: -10px -10px 0 0;
 }
 
 .action-panel .red {
 	margin-bottom: 10px;
+    width: 64px;
 }
 
 .action-panel .green {
@@ -271,10 +288,6 @@ textarea:focus {
 
 .action-panel .green:last-child {
     margin-right: 0;
-}
-
-.action-panel button {
-	width: 64px;
 }
 
 .action-panel .get-lor {

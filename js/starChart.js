@@ -132,7 +132,6 @@ var StarChart = {
 
         // clear path
         pathObj.path.removeSegments();
-        pathObj.path.closed = false;
 
         // add origin point
         pathObj.path.add(new paper.Point(0, 0));
@@ -147,7 +146,7 @@ var StarChart = {
         for (var ii = StarChart.actions.length, i = 0; i < ii; i++) {
             var action = StarChart.actions[i];
             StarChart.addPoint(pathObj, action.len, action.lor);
-        }
+        };
         pathObj.area = this.paths[0].path.area;
 
         // fit canvas
@@ -201,7 +200,7 @@ var StarChart = {
     finished: function () {
         $('textarea').text(JSON.stringify(this.actions));
         console.log(JSON.stringify(this.actions));
-        alert('该户型套内面积为：' + this.paths[0].area + '平方米');
+        alert('该户型套内面积为：' + Math.abs(this.paths[0].area) + '平方米');
     },
     copy: function (array) {
         var str = JSON.stringify(array);
