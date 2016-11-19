@@ -350,6 +350,10 @@ var StarChart = {
         var curLoR = Tools.getLoR();
 
         if (Tools.beta > 5 || Tools.beta < -5) {
+            if (Tools.beta === -720) {
+                alert('init device, pls try again');
+                return false;
+            }
             alert('请保持水平测距' + Tools.beta);
             return false;
         }
@@ -415,8 +419,6 @@ var Tools = {
                 endAngle = Tools.alpha;
 
         var delta = endAngle - startAngle;
-        
-        $('textarea').text(endAngle + ' - ' + startAngle + ' = ' + delta);
         
         // TODO: 应加大角度，以防连续测量同一线段的墙面
         if (delta > 0 && delta < 180) {
