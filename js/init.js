@@ -55,13 +55,13 @@
     $('.action-panel button.finish').click(function () {
         StarChart.finished();
     });
-    
+
     // reverse
     $('.action-panel .reverse').click(function () {
         StarChart.undo();
         var wallData = StarChart.undoActions[StarChart.undoActions.length - 1];
         addPoint({
-            lor: wallData.lor === 'l' ? 'r' : 'l',
+            lor: StarChart.actions[StarChart.actions.length - 1].lor === 'l' ? 'r' : 'l',
             len: wallData.len,
             alpha: wallData.alpha > 180 ? wallData.alpha - 180 : wallData.alpha + 180
         });
@@ -111,20 +111,20 @@
             return false;
         }
 
-        if (Tools.beta > 5 || Tools.beta < -5) {
+        if (!data && (Tools.beta > 5 || Tools.beta < -5)) {
             alert('请保持水平测距' + Tools.beta);
             return false;
         }
-        
+
         if (StarChart.actions.length > 0) {
-            if (curLoR === 'm') {
-                alert('请保持与上一墙面垂直');
+            if (!data && curLoR === 'm') {
+                alert('请保持与上一面墙垂直');
                 return false;
             }
-            
+
             // 把当前方向付给上一条线段
             StarChart.actions[StarChart.actions.length - 1].lor = curLoR;
-            
+
             // 有线段后展现操作按钮
             $('button.finish, button.undo, button.reverse').show();
         }
@@ -138,7 +138,7 @@
 
         // draw chart
         StarChart.redrawChart();
-        
+
         // clear input
         $('.action-panel input').val('');
     };

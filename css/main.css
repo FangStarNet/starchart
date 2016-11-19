@@ -269,6 +269,10 @@ textarea:focus {
     margin-right: 10px;
 }
 
+.action-panel .green:last-child {
+    margin-right: 0;
+}
+
 .action-panel button {
 	width: 64px;
 }

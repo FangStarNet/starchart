@@ -315,6 +315,38 @@ var StarChart = {
             $('.right').removeClass('red-hover');
             $('.left').removeClass('red-hover');
         }
+    },
+    addWall: function (len) {
+        // 数据正确性校验
+        var curLoR = Tools.getLoR();
+
+        if (Tools.beta > 5 || Tools.beta < -5) {
+            alert('请保持水平测距' + Tools.beta);
+            return false;
+        }
+
+        if (StarChart.actions.length > 0) {
+            if (curLoR === 'm') {
+                alert('请保持与上一面墙垂直');
+                return false;
+            }
+
+            // 把当前方向付给上一条线段
+            StarChart.actions[StarChart.actions.length - 1].lor = curLoR;
+
+            // 有线段后展现操作按钮
+            $('button.finish, button.undo, button.reverse').show();
+        }
+
+        // 模型数据填充
+        StarChart.actions.push({
+            'len': parseFloat(len),
+            'lor': "",
+            'alpha': Tools.alpha
+        });
+
+        // draw chart
+        StarChart.redrawChart();
     }
 };
 
