@@ -124,9 +124,6 @@
 
             // 把当前方向付给上一条线段
             StarChart.actions[StarChart.actions.length - 1].lor = curLoR;
-
-            // 有线段后展现操作按钮
-            $('button.finish, button.undo, button.reverse').show();
         }
 
         // 模型数据填充
@@ -142,4 +139,6 @@
         // clear input
         $('.action-panel input').val('');
     };
+
+    $('.start-panel button.red').click();
 })();

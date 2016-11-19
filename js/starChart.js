@@ -23,20 +23,23 @@
  * @file Star Chart Draw.
  * 
  * @author <a href="mailto:liliyuan@fangstar.net">Liyuan Li</a>
- * @version 0.1.0.0, Nov 12, 2016 
+ * @version 0.2.0.1, Nov 19, 2016 
  */
 
 var StarChart = {
-    // data
+    // every path data
     paths: [],
     // Paper.js Scope Global
     paper: undefined,
-    // record every action
+    // record every action data
     actions: [],
+    // record undo data
     undoActions: [],
     pathStack: [],
     allPaths: [],
-    // init canvas & path
+    /**
+     * init canvas & paths
+     */
     init: function () {
         // Get a reference to the canvas object
         var canvas = document.getElementById('canvas');
@@ -60,7 +63,15 @@ var StarChart = {
             dir: 4 // 1 (x, 0); 2 (0, y); 3 (-x, 0); 4 (0, -y)
         });
     },
-    newPoint: function (prevPoint, prevDir, len, lor) {
+    /**
+     * 根据上一条线的长度和方向获取当前坐标
+     * @param {object} prevPoint 上一个坐标点
+     * @param {int} prevDir 上一个方向： 1 (x, 0); 2 (0, y); 3 (-x, 0); 4 (0, -y).
+     * @param {decimal} len line length.
+     * @param {string} lor [l: left; r: right].
+     * @returns {object} 新坐标
+     */
+    getNewPoint: function (prevPoint, prevDir, len, lor) {
         var newPoint = {},
                 newDir = 0;
 
@@ -105,7 +116,7 @@ var StarChart = {
      * @param {string} dir direction [l: left; r: right].
      */
     addPoint: function (pathObj, len, lor) {
-        var data = this.newPoint(pathObj.point, pathObj.dir, len, lor);
+        var data = this.getNewPoint(pathObj.point, pathObj.dir, len, lor);
 
         // draw
         pathObj.path.add(new paper.Point(data.point.x, data.point.y));
@@ -113,9 +124,13 @@ var StarChart = {
         pathObj.point = data.point;
         pathObj.dir = data.dir;
     },
+    /**
+     * 重新绘制整个图形
+     */
     redrawChart: function () {
         var pathObj = StarChart.paths[0];
 
+        // clear path
         pathObj.path.removeSegments();
         pathObj.path.closed = false;
 
@@ -128,15 +143,35 @@ var StarChart = {
         };
         pathObj.dir = 4;
 
+        // add every point
         for (var ii = StarChart.actions.length, i = 0; i < ii; i++) {
             var action = StarChart.actions[i];
             StarChart.addPoint(pathObj, action.len, action.lor);
         }
-
         pathObj.area = this.paths[0].path.area;
+
         // fit canvas
         pathObj.path.fitBounds(paper.view.bounds);
+
+        // 操作按钮控制
+        this._actionBtn();
     },
+    /**
+     * 根据当前数据模型，控制按钮的展现与否
+     */
+    _actionBtn: function () {
+        if(StarChart.actions.length === 0) {
+            $('button.finish, button.undo, button.reverse').hide();
+        } else if (StarChart.actions.length === 1) {
+            $('button.finish, button.undo').show();
+            $('button.reverse').hide();
+        } else {
+            $('button.finish, button.undo, button.reverse').show();
+        }
+    },
+    /**
+     * 恢复撤销的操作
+     */
     redo: function () {
         if (this.undoActions.length < 1) {
             return false;
@@ -147,6 +182,9 @@ var StarChart = {
 
         this.redrawChart();
     },
+    /**
+     * 撤销上一步操作
+     */
     undo: function () {
         if (this.actions.length < 1) {
             return false;
@@ -157,6 +195,9 @@ var StarChart = {
 
         this.redrawChart();
     },
+    /**
+     * 完成户型图的绘制
+     */
     finished: function () {
         $('textarea').text(JSON.stringify(this.actions));
         console.log(JSON.stringify(this.actions));
@@ -234,7 +275,7 @@ var StarChart = {
                     }];
 
         for (var jj = path.length, j = 0; j < jj; j++) {
-            var data = this.newPoint(prevObj.point, prevObj.dir, path[j].len, path[j].lor)
+            var data = this.getNewPoint(prevObj.point, prevObj.dir, path[j].len, path[j].lor)
             prevObj.point = data.point;
             prevObj.dir = data.dir;
             points.push(data.point);
@@ -282,7 +323,6 @@ var StarChart = {
         if (len > 200 || len < 196) {
             return true;
         }
-        console.log(len);
         return false;
     },
     removeSegments: function () {
@@ -302,20 +342,10 @@ var StarChart = {
             }
         }
     },
-    // 标识上一个墙体和当前手机水平位置的左右
-    markCurrentLR: function () {
-        var lor = Tools.getLoR();
-        if (lor === 'l') {
-            $('.left').addClass('red-hover');
-            $('.right').removeClass('red-hover');
-        } else if (lor === 'r') {
-            $('.right').addClass('red-hover');
-            $('.left').removeClass('red-hover');
-        } else {
-            $('.right').removeClass('red-hover');
-            $('.left').removeClass('red-hover');
-        }
-    },
+    /**
+     * 添加一面墙
+     * @param {float} len 墙的长度
+     */
     addWall: function (len) {
         // 数据正确性校验
         var curLoR = Tools.getLoR();
@@ -367,13 +397,16 @@ var Tools = {
                 Tools.alpha = Math.ceil(360 - event.alpha);
                 Tools.beta = event.beta;
                 Tools._showAlphaBeta(event.alpha, event.beta);
-
-                StarChart.markCurrentLR();
+                Tools.markCurrentLR();
             }, false);
         } else {
             $('#device').html('你个破手机');
         }
     },
+    /**
+     * 根据上一个 alpha 和当前的 alpha 获取左中右
+     * @returns {String} 两个 alpha 值之间的左右中
+     */
     getLoR: function () {
         const MIDDLE = "m";
         const RIGHT = "r";
@@ -397,6 +430,22 @@ var Tools = {
             return RIGHT;
         } else {
             return MIDDLE;
+        }
+    },
+    /**
+     * 标识上一个墙体和当前手机水平位置的左右
+     */
+    markCurrentLR: function () {
+        var lor = Tools.getLoR();
+        if (lor === 'l') {
+            $('.left').addClass('red-hover');
+            $('.right').removeClass('red-hover');
+        } else if (lor === 'r') {
+            $('.right').addClass('red-hover');
+            $('.left').removeClass('red-hover');
+        } else {
+            $('.right').removeClass('red-hover');
+            $('.left').removeClass('red-hover');
         }
     }
 };
