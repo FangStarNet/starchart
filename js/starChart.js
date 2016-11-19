@@ -305,18 +305,32 @@ var StarChart = {
 };
 
 var Tools = {
-    lastAlpha: 0,
+    lastAlpha: -1,
+    beta: -1, 
     getDeviceAlpha: function () {
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function (event) {
                 Tools.lastAlpha = Math.ceil(360 - event.alpha);
+                Tools.beta = event.beta;
+
+                var lor = Tools.getLoR()
+                if (lor === 'l') {
+                    $('.left').addClass('red-hover');
+                    $('.right').removeClass('red-hover');
+                } else if (lor === 'r') {
+                    $('.right').addClass('red-hover');
+                    $('.left').removeClass('red-hover');
+                } else {
+                    $('.right').removeClass('red-hover');
+                    $('.left').removeClass('red-hover');
+                }
             }, false);
         } else {
             $('#device').html('你个破手机');
         }
     },
     getLoR: function () {
-        const MIDDLE = "l";
+        const MIDDLE = "m";
         const RIGHT = "r";
         const LEFT = "l";
 

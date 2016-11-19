@@ -20,17 +20,18 @@
         </div>
         <div class="action-panel fn-clear fn-none">
             <div class="fn-clear">
-                <textarea readonly>record data</textarea>
+                <button class="red fn-left left"><</button>
                 <input type="number"><span class="ft-gray"> m</span>
-                <button class="green fn-right">Next</button>
+                <button class="red fn-right right">></button>
             </div>
             <div class="fn-clear">
-                <button class="red fn-left finish">finish</button>
-                <button class="red fn-left redo">redo</button>
-                <button class="red fn-left undo">undo</button> 
-                <button class="red fn-left get-lor">LoR</button> 
+                <button class="green fn-left finish fn-none">finish</button>
+                <button class="green fn-left redo fn-none">redo</button>
+                <button class="green fn-left undo fn-none">undo</button> 
+                <textarea readonly>record data</textarea>
             </div>
         </div>
+        <div class="tip"></div>
 
         <script type="text/javascript" src="js/lib/jquery-3.1.0.min.js"></script>
         <script type="text/javascript" src="js/lib/paper/paper-full.js"></script>

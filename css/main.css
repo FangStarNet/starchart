@@ -167,9 +167,8 @@ button.red,
     color: #d23f31;
 }
 
-button.red:hover,
-.btn.red:hover,
-.btn.red-hover {
+.btn.red-hover,
+button.red-hover {
     color: #FFF;
     background-color: #d23f31;
     background-image: linear-gradient(#c0372a, #d23f31);
@@ -258,15 +257,15 @@ textarea:focus {
 .action-panel textarea {
     float: left;
     width: 100px;
-    height: 30px;
+    height: 33px;
     padding: 0;
 }
 
-.action-panel .green {
+.action-panel .red {
 	margin-bottom: 10px;
 }
 
-.action-panel .red {
+.action-panel .green {
     margin-right: 10px;
 }
 
@@ -276,5 +275,19 @@ textarea:focus {
 
 .action-panel .get-lor {
     width: auto;
+}
+
+.tip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
+    padding-top: 50%;
+    color: #fff;
+    display: none;
 }
 /* end action panel  */
