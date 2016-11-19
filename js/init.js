@@ -20,99 +20,126 @@
  */
 
 /**
- * @file init bind event.
+ * @file init chart event.
  * 
  * @author <a href="mailto:liliyuan@fangstar.net">Liyuan Li</a>
- * @version 0.1.0.0, Nov 12, 2016 
+ * @version 0.1.2.1, Nov 19, 2016 
  */
 
- /**
-  * @description 页面初始化非 canvas 事件
-  */
- (function () {
- 	$('#canvas').outerHeight($(window).height() - $('.action-panel').outerHeight());
+/**
+ * @description 页面初始化非 canvas 事件
+ */
+(function () {
+    // set chart width & height
+    $('#canvas').outerHeight($(window).height() - $('.action-panel').outerHeight());
 
- 	// go start
- 	$('.start-panel button.red').click(function () {
- 		$('.start-panel').hide();
- 		$('.action-panel').show();
+    // go start
+    $('.start-panel button.red').click(function () {
+        $('.start-panel').hide();
+        $('.action-panel').show();
 
- 		StarChart.init();
- 	});
+        StarChart.init();
+    });
 
- 	// redo
- 	$('.action-panel button.redo').click(function () {
- 		StarChart.redo();
- 	});
+    // redo
+    $('.action-panel button.redo').click(function () {
+        StarChart.redo();
+    });
 
- 	// undo
- 	$('.action-panel button.undo').click(function () {
- 		StarChart.undo();
- 	});
+    // undo
+    $('.action-panel button.undo').click(function () {
+        StarChart.undo();
+    });
 
- 	// finish
- 	$('.action-panel button.finish').click(function () {
- 		StarChart.finished();
- 	});
+    // finish
+    $('.action-panel button.finish').click(function () {
+        StarChart.finished();
+    });
+    
+    // reverse
+    $('.action-panel .reverse').click(function () {
+        StarChart.undo();
+        var wallData = StarChart.undoActions[StarChart.undoActions.length - 1];
+        addPoint({
+            lor: wallData.lor === 'l' ? 'r' : 'l',
+            len: wallData.len,
+            alpha: wallData.alpha > 180 ? wallData.alpha - 180 : wallData.alpha + 180
+        });
+    });
 
- 	// add next line
- 	$('.action-panel button.red.right').click(function () {
- 		addPoint(Tools.getLoR());
- 	});
+    // add next line
+    $('.action-panel button.red.right').click(function () {
+        addPoint();
+    });
 
- 	// go Demo1
- 	$('.start-panel li').click(function () {
- 		$('.start-panel').hide();
- 		$('.action-panel').show(); 
+    // go Demo1
+    $('.start-panel li').click(function () {
+        $('.start-panel').hide();
+        $('.action-panel').show();
 
- 		var mockActions = [{"len":0.14,"lor":"l","alpha":282},{"len":0.266,"lor":"r","alpha":199},{"len":1.089,"lor":"l","alpha":288},{"len":0.28,"lor":"l","alpha":186},{"len":0.667,"lor":"r","alpha":93},{"len":0.386,"lor":"l","alpha":189},{"len":0.419,"lor":"r","alpha":105},{"len":1.851,"lor":"r","alpha":186},{"len":1.823,"lor":"r","alpha":274},{"len":2.448,"lor":"l","alpha":4},{"len":6.751,"lor":"r","alpha":281},{"len":1.019,"lor":"l","alpha":27},{"len":0.349,"lor":"l","alpha":296},{"len":0.368,"lor":"r","alpha":213},{"len":0.924,"lor":"r","alpha":299},{"len":2.722,"lor":"r","alpha":23},{"len":5.797,"lor":"l","alpha":119},{"len":0.244,"lor":"l","alpha":17},{"len":4.448,"lor":"r","alpha":296},{"len":3.525,"lor":"r","alpha":22},{"len":3.083,"lor":"r","alpha":115},{"len":2.662,"lor":"l","alpha":206},{"len":0.292,"lor":"l","alpha":113},{"len":2.777,"lor":"r","alpha":32},{"len":2.671,"lor":"r","alpha":111},{"len":2.492,"lor":"r","alpha":204},{"len":1.702,"lor":"l","alpha":306},{"len":0.173,"lor":"l","alpha":211},{"len":1.892,"lor":"l","alpha":116},{"len":2.82,"lor":"l","alpha":34},{"len":2.563,"lor":"r","alpha":327},{"len":1.071,"lor":"r","alpha":45},{"len":3.975,"lor":"r","alpha":123},{"len":3.257,"lor":"r","alpha":218},{"len":0.607,"lor":"l","alpha":282},{"len":0.633,"lor":"l","alpha":207},{"len":0.682,"lor":"r","alpha":117},{"len":3.334,"lor":"l","alpha":193},{"len":1.148,"lor":"r","alpha":109}];
- 		StarChart.init();
+        var mockActions = [{"len": 0.14, "lor": "l", "alpha": 282}, {"len": 0.266, "lor": "r", "alpha": 199}, {"len": 1.089, "lor": "l", "alpha": 288}, {"len": 0.28, "lor": "l", "alpha": 186}, {"len": 0.667, "lor": "r", "alpha": 93}, {"len": 0.386, "lor": "l", "alpha": 189}, {"len": 0.419, "lor": "r", "alpha": 105}, {"len": 1.851, "lor": "r", "alpha": 186}, {"len": 1.823, "lor": "r", "alpha": 274}, {"len": 2.448, "lor": "l", "alpha": 4}, {"len": 6.751, "lor": "r", "alpha": 281}, {"len": 1.019, "lor": "l", "alpha": 27}, {"len": 0.349, "lor": "l", "alpha": 296}, {"len": 0.368, "lor": "r", "alpha": 213}, {"len": 0.924, "lor": "r", "alpha": 299}, {"len": 2.722, "lor": "r", "alpha": 23}, {"len": 5.797, "lor": "l", "alpha": 119}, {"len": 0.244, "lor": "l", "alpha": 17}, {"len": 4.448, "lor": "r", "alpha": 296}, {"len": 3.525, "lor": "r", "alpha": 22}, {"len": 3.083, "lor": "r", "alpha": 115}, {"len": 2.662, "lor": "l", "alpha": 206}, {"len": 0.292, "lor": "l", "alpha": 113}, {"len": 2.777, "lor": "r", "alpha": 32}, {"len": 2.671, "lor": "r", "alpha": 111}, {"len": 2.492, "lor": "r", "alpha": 204}, {"len": 1.702, "lor": "l", "alpha": 306}, {"len": 0.173, "lor": "l", "alpha": 211}, {"len": 1.892, "lor": "l", "alpha": 116}, {"len": 2.82, "lor": "l", "alpha": 34}, {"len": 2.563, "lor": "r", "alpha": 327}, {"len": 1.071, "lor": "r", "alpha": 45}, {"len": 3.975, "lor": "r", "alpha": 123}, {"len": 3.257, "lor": "r", "alpha": 218}, {"len": 0.607, "lor": "l", "alpha": 282}, {"len": 0.633, "lor": "l", "alpha": 207}, {"len": 0.682, "lor": "r", "alpha": 117}, {"len": 3.334, "lor": "l", "alpha": 193}, {"len": 1.148, "lor": "r", "alpha": 109}];
+        StarChart.init();
 
- 		for (var i = 0, j = 0; i < mockActions.length; i++) {
- 			setTimeout(function () {
- 				$('.action-panel input').val(mockActions[j].len);
- 				if (mockActions[j].dir === 'l') {
- 					$('.action-panel button.green.fn-left').addClass('active');
- 					setTimeout(function () {
- 						$('.action-panel button.green.fn-left').removeClass('active');
- 					}, 500);
- 				} else {
- 					$('.action-panel button.green.fn-right').addClass('active');
- 					setTimeout(function () {
- 						$('.action-panel button.green.fn-right').removeClass('active');
- 					}, 500);
- 				}
- 				StarChart.actions.push(mockActions[j++]);
- 				StarChart.redrawChart();
- 			}, 700 * i);
- 			
- 		};
- 	});
+        for (var i = 0, j = 0; i < mockActions.length; i++) {
+            setTimeout(function () {
+                $('.action-panel input').val(mockActions[j].len);
+                if (mockActions[j].dir === 'l') {
+                    $('.action-panel button.green.fn-left').addClass('active');
+                    setTimeout(function () {
+                        $('.action-panel button.green.fn-left').removeClass('active');
+                    }, 500);
+                } else {
+                    $('.action-panel button.green.fn-right').addClass('active');
+                    setTimeout(function () {
+                        $('.action-panel button.green.fn-right').removeClass('active');
+                    }, 500);
+                }
+                StarChart.actions.push(mockActions[j++]);
+                StarChart.redrawChart();
+            }, 700 * i);
 
- 	var addPoint = function (dir) {
- 		var len = $.trim($('.action-panel input').val());
- 		if (!/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/.test(len)) {
- 			alert('请输入正确的长度');
- 			return false;
- 		}
+        }
+    });
 
- 		if (Tools.beta > 10 || Tools.beta < -10) {
- 			alert('请保持水平测距');
- 			return false;
- 		}
+    var addPoint = function (data) {
+        // 数据正确性校验
+        var len = data ? data.len : $.trim($('.action-panel input').val()),
+                curLoR = data ? data.lor : Tools.getLoR();
 
- 		if (StarChart.actions.length > 0) {
-	 		StarChart.actions[StarChart.actions.length - 1].lor = dir;
-	 		$('button.finish, button.undo').show();
- 		}
+        if (!/^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/.test(len)) {
+            alert('请输入正确的长度');
+            return false;
+        }
 
- 		StarChart.actions.push({
+        if (Tools.beta > 5 || Tools.beta < -5) {
+            alert('请保持水平测距' + Tools.beta);
+            return false;
+        }
+        
+        if (StarChart.actions.length > 0) {
+            if (curLoR === 'm') {
+                alert('请保持与上一墙面垂直');
+                return false;
+            }
+            
+            // 把当前方向付给上一条线段
+            StarChart.actions[StarChart.actions.length - 1].lor = curLoR;
+            
+            // 有线段后展现操作按钮
+            $('button.finish, button.undo, button.reverse').show();
+        }
+
+        // 模型数据填充
+        StarChart.actions.push({
             'len': parseFloat(len),
             'lor': "",
-            'alpha': Tools.lastAlpha
+            'alpha': data ? data.alpha : Tools.alpha
         });
 
- 		StarChart.redrawChart();
- 		$('.action-panel input').val('').focus();
- 	};
- })();
+        // draw chart
+        StarChart.redrawChart();
+        
+        // clear input
+        $('.action-panel input').val('');
+    };
+})();

@@ -301,29 +301,42 @@ var StarChart = {
                 allPath.splice(i, 1);
             }
         }
+    },
+    // 标识上一个墙体和当前手机水平位置的左右
+    markCurrentLR: function () {
+        var lor = Tools.getLoR();
+        if (lor === 'l') {
+            $('.left').addClass('red-hover');
+            $('.right').removeClass('red-hover');
+        } else if (lor === 'r') {
+            $('.right').addClass('red-hover');
+            $('.left').removeClass('red-hover');
+        } else {
+            $('.right').removeClass('red-hover');
+            $('.left').removeClass('red-hover');
+        }
     }
 };
 
+/**
+ * 辅助绘图的工具
+ */
 var Tools = {
-    lastAlpha: -1,
-    beta: -1, 
-    getDeviceAlpha: function () {
+    alpha: -1, // 指南针 0 ~ 360
+    beta: -720, // 测距仪水平位置 -180 ~ 180
+    // 在首页实时展现 alpha & beta 数值
+    _showAlphaBeta: function (alpha, beta) {
+        $('#device').html('alpha: ' + alpha + '<br>' + 'beta: ' + beta);
+    },
+    // 初始化获取 alpha & beta
+    initDevice: function () {
         if (window.DeviceOrientationEvent) {
             window.addEventListener('deviceorientation', function (event) {
-                Tools.lastAlpha = Math.ceil(360 - event.alpha);
+                Tools.alpha = Math.ceil(360 - event.alpha);
                 Tools.beta = event.beta;
+                Tools._showAlphaBeta(event.alpha, event.beta);
 
-                var lor = Tools.getLoR()
-                if (lor === 'l') {
-                    $('.left').addClass('red-hover');
-                    $('.right').removeClass('red-hover');
-                } else if (lor === 'r') {
-                    $('.right').addClass('red-hover');
-                    $('.left').removeClass('red-hover');
-                } else {
-                    $('.right').removeClass('red-hover');
-                    $('.left').removeClass('red-hover');
-                }
+                StarChart.markCurrentLR();
             }, false);
         } else {
             $('#device').html('你个破手机');
@@ -334,10 +347,14 @@ var Tools = {
         const RIGHT = "r";
         const LEFT = "l";
 
-        var startAngle = StarChart.actions.length === 0 ? Tools.lastAlpha : StarChart.actions[StarChart.actions.length - 1].alpha,
-        endAngle = Tools.lastAlpha;
+        var startAngle = StarChart.actions.length === 0 ? Tools.alpha : StarChart.actions[StarChart.actions.length - 1].alpha,
+                endAngle = Tools.alpha;
 
         var delta = endAngle - startAngle;
+        
+        $('textarea').text(endAngle + ' - ' + startAngle + ' = ' + delta);
+        
+        // TODO: 应加大角度，以防连续测量同一线段的墙面
         if (delta > 0 && delta < 180) {
             return RIGHT;
         } else if (delta > 0 && delta > 180) {
@@ -351,4 +368,4 @@ var Tools = {
         }
     }
 };
-Tools.lastAlpha = Tools.getDeviceAlpha();
+Tools.initDevice();

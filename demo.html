@@ -10,13 +10,7 @@
         <canvas id="canvas" class="canvas"></canvas>
         <div class="start-panel">
             <button class="red">Start</button>
-            <h2>Demo</h2>
-            <ul>
-                <li>
-                    <a href="javascript:void(0)">DV's Home</a>
-                </li>
-            </ul>
-            <h2 id="device"></h2>
+            <span id="device"></span>
         </div>
         <div class="action-panel fn-clear fn-none">
             <div class="fn-clear">
@@ -29,10 +23,10 @@
                 <button class="green fn-left redo fn-none">redo</button>
                 <button class="green fn-left undo fn-none">undo</button> 
                 <textarea readonly>record data</textarea>
+                <button class="green fn-right fn-none reverse">R</button> 
             </div>
         </div>
         <div class="tip"></div>
-
         <script type="text/javascript" src="js/lib/jquery-3.1.0.min.js"></script>
         <script type="text/javascript" src="js/lib/paper/paper-full.js"></script>
         <script type="text/javascript" src="js/starChart.js"></script>
