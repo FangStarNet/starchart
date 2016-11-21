@@ -319,14 +319,60 @@ var StarChart = {
         var len = paperPath.getLength();
 
         paperPath.removeSegments();
-        if (len > 200 || len < 196) {
-            return true;
+
+        // 不规则闭合
+        // if (len > 200 || len < 196) {
+        //     return true;
+        // }
+
+        // 规则闭合
+
+        if (Math.abs(points[points.length - 1].x) < 0.3 && 
+            Math.abs(points[points.length - 1].y) < 0.3)
+        {
+            return false;
         }
-        return false;
+
+        return true;
     },
     removeSegments: function () {
-        var mockData = [{"len": 14.2, "lor": "l"}, {"len": 26.3, "lor": "r"}, {"len": 111.5, "lor": "l"}, {"len": 27.5, "lor": "l"}, {"len": 66.5, "lor": "r"}, {"len": 38, "lor": "l"}, {"len": 41.5, "lor": "r"}, {"len": 185, "lor": "r"}, {"len": 180, "lor": "r"}, {"len": 249.5, "lor": "l"}, {"len": 670, "lor": "r"}, {"len": 112, "lor": "l"}, {"len": 33.3, "lor": "l"}, {"len": 36, "lor": "r"}, {"len": 91, "lor": "r"}, {"len": 268.5, "lor": "r"}, {"len": 579, "lor": "l"}, {"len": 23, "lor": "l"}, {"len": 446, "lor": "r"}, {"len": 348, "lor": "r"}, {"len": 310, "lor": "r"}, {"len": 266, "lor": "l"}, {"len": 29, "lor": "l"}, {"len": 266, "lor": "r"}, {"len": 262, "lor": "r"}, {"len": 255, "lor": "r"}, {"len": 170, "lor": "l"}, {"len": 16, "lor": "l"}, {"len": 189, "lor": "l"}, {"len": 281, "lor": "l"}, {"len": 235, "lor": "r"}, {"len": 118, "lor": "r"}, {"len": 376, "lor": "r"}, {"len": 324, "lor": "r"}, {"len": 67, "lor": "l"}, {"len": 75, "lor": "l"}, {"len": 67, "lor": "r"}, {"len": 336, "lor": "l"}, {"len": 100, "lor": "r"}];
-        mockData.splice(10, 29);
+        // DV‘s home [{"len": 14.2, "lor": "l"}, {"len": 26.3, "lor": "r"}, {"len": 111.5, "lor": "l"}, {"len": 27.5, "lor": "l"}, {"len": 66.5, "lor": "r"}, {"len": 38, "lor": "l"}, {"len": 41.5, "lor": "r"}, {"len": 185, "lor": "r"}, {"len": 180, "lor": "r"}, {"len": 249.5, "lor": "l"}, {"len": 670, "lor": "r"}, {"len": 112, "lor": "l"}, {"len": 33.3, "lor": "l"}, {"len": 36, "lor": "r"}, {"len": 91, "lor": "r"}, {"len": 268.5, "lor": "r"}, {"len": 579, "lor": "l"}, {"len": 23, "lor": "l"}, {"len": 446, "lor": "r"}, {"len": 348, "lor": "r"}, {"len": 310, "lor": "r"}, {"len": 266, "lor": "l"}, {"len": 29, "lor": "l"}, {"len": 266, "lor": "r"}, {"len": 262, "lor": "r"}, {"len": 255, "lor": "r"}, {"len": 170, "lor": "l"}, {"len": 16, "lor": "l"}, {"len": 189, "lor": "l"}, {"len": 281, "lor": "l"}, {"len": 235, "lor": "r"}, {"len": 118, "lor": "r"}, {"len": 376, "lor": "r"}, {"len": 324, "lor": "r"}, {"len": 67, "lor": "l"}, {"len": 75, "lor": "l"}, {"len": 67, "lor": "r"}, {"len": 336, "lor": "l"}, {"len": 100, "lor": "r"}];
+        // mockData.splice(10, 29);
+
+        var mockData = 
+         [{"len":2.938,"lor":"l","alpha":183},
+        {"len":2.909,"lor":"l","alpha":113},
+        {"len":1.578,"lor":"r","alpha":35},
+        {"len":0.294,"lor":"r","alpha":123},
+        {"len":0.354,"lor":"l","alpha":204},
+        {"len":4.009,"lor":"l","alpha":69},
+        {"len":0.161,"lor":"l","alpha":35},
+        {"len":0.342,"lor":"r","alpha":290},
+        {"len":1.516,"lor":"l","alpha":15},
+        {"len":4.360,"lor":"","alpha":265},
+        {"len":0.511,"lor":"l","alpha":15},
+        {"len":0.290,"lor":"l","alpha":15},
+        {"len":0.532,"lor":"l","alpha":15},
+        {"len":2.902,"lor":"l","alpha":15}
+        ];
+        // 公司男厕所
+        // [{"len":2.938,"lor":"l","alpha":183},
+        // {"len":2.909,"lor":"l","alpha":113},
+        // {"len":1.578,"lor":"r","alpha":35},
+        // {"len":0.294,"lor":"r","alpha":123},
+        // {"len":0.354,"lor":"l","alpha":204},
+        // {"len":4.009,"lor":"l","alpha":69},
+        // {"len":0.161,"lor":"l","alpha":35},
+        // {"len":0.342,"lor":"r","alpha":290},
+        // {"len":1.516,"lor":"l","alpha":15},
+        // {"len":4.360,"lor":"","alpha":265},
+        // {"len":0.511,"lor":"l","alpha":15},
+        // {"len":0.290,"lor":"l","alpha":15},
+        // {"len":0.532,"lor":"l","alpha":15},
+        // {"len":2.902,"lor":"l","alpha":15}
+        // ];
+        // 右侧过道 [{"len":10.922,"lor":"l","alpha":183},{"len":1.239,"lor":"l","alpha":113},{"len":1.024,"lor":"r","alpha":35},{"len":1.035,"lor":"r","alpha":123},{"len":1,"lor":"l","alpha":204},{"len":7.271,"lor":"l","alpha":69},{"len":2.478,"lor":"l","alpha":35},{"len":7.922,"lor":"r","alpha":290},{"len":8.493,"lor":"l","alpha":15},{"len":1.606,"lor":"","alpha":265}];
+        // [{"len":2,"lor":"r","alpha":207},{"len":2,"lor":"r","alpha":291},{"len":1,"lor":"r","alpha":28},{"len":1,"lor":"l","alpha":95},{"len":1,"lor":"r","alpha":24},{"len":1,"lor":"","alpha":89}];
         allPath = StarChart.genAllPath(mockData, []);
 
         for (var i = allPath.length - 1; i >= 0; i--) {
@@ -349,14 +395,14 @@ var StarChart = {
         // 数据正确性校验
         var curLoR = Tools.getLoR();
 
-        if (Tools.beta > 5 || Tools.beta < -5) {
-            if (Tools.beta === -720) {
-                alert('init device, pls try again');
-                return false;
-            }
-            alert('请保持水平测距' + Tools.beta);
-            return false;
-        }
+        // if (Tools.beta > 5 || Tools.beta < -5) {
+        //     if (Tools.beta === -720) {
+        //         alert('init device, pls try again');
+        //         return false;
+        //     }
+        //     alert('请保持水平测距' + Tools.beta);
+        //     return false;
+        // }
 
         if (StarChart.actions.length > 0) {
             if (curLoR === 'm') {

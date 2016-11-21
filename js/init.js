@@ -118,7 +118,7 @@
             return false;
         }
 
-        if (!data && (Tools.beta > 5 || Tools.beta < -5)) {
+        if (!data && (Tools.beta > 50 || Tools.beta < -50)) {
             alert('请保持水平测距' + Tools.beta);
             return false;
         }
